@@ -1,0 +1,22 @@
+.emploee {
+    border: 1px solid;
+    padding: 10px;
+    box-shadow: 5px 10px 18px #888888;
+}
+
+.emploee_increase {
+    color: gold;
+}
+
+.group_items {
+    width: 100px;
+}
+
+.group_items .fa-star {
+    opacity: 0;
+
+}
+
+.fa-star.marked {
+    opacity: 1;
+}
