@@ -30,23 +30,36 @@ class App extends React.Component {
   }
 
   addEmployee = (employeeName, employeeSalary) => {
-    let newEmpyotee = { name: employeeName, salary: employeeSalary, bonus: false, promotion: false, id: ++this.maxID }
+    let newEmpyoee = { name: employeeName, salary: employeeSalary, bonus: false, promotion: false, id: ++this.maxID }
     this.setState((state) => {
       return {
-        employees: [...state.employees, newEmpyotee]
+        employees: [...state.employees, newEmpyoee]
       }
     })
     console.log(this.state.employees)
-
   }
 
+  toggleProp = (id, prop) => {
+    this.setState({
+      employees: [...this.state.employees.map(el => {
+        if (el.id === id) {
+          return { ...el, [prop]: !el[prop] }
+        }
+        return el;
+      })]
+    })
+  }
+
+
   render() {
+    let bonusForSalary = this.state.employees.filter(el => el.bonus === true).length;
+    let employeesQuantity = this.state.employees.length;
 
     return (
       <div className="App">
-        <AppHeader />
+        <AppHeader bonus={bonusForSalary} employeesQuantity={employeesQuantity} />
         <SearchBlock />
-        <AppFilter employees={this.state.employees} deleteItem={this.deleteItem} />
+        <AppFilter employees={this.state.employees} deleteItem={this.deleteItem} toggleProp={this.toggleProp} />
         <AddEmployee addEmployee={this.addEmployee} />
       </div>
     );

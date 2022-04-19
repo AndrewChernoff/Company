@@ -1,62 +1,40 @@
 import React from 'react';
 import '../app_filter.css';
 
-class Employee extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            increase: this.props.bonus,
-            promoted: this.props.promotion
-        }
+const Employee = (props) => {
+
+    let { name, salary, deleteItem } = props;
+    let classnames = "emploee d-flex justify-content-between m-2";
+    let starClassname = "fa-solid fa-star";
+
+    if (props.bonus) {
+        classnames += ' emploee_increase';
     }
 
-    increase = () => {
-        this.setState({
-            increase: !this.state.increase
-        })
+    if (props.promotion) {
+        starClassname += ' marked';
     }
 
-    promoteEmployee = () => {
-        this.setState({
-            promoted: !this.state.promoted
-        })
-    }
+    return (
+        <div>
+            <li className={classnames}>
+                <div data-prop='promotion' onClick={props.toggleProp}>{name}</div>
 
-    render() {
-        let bonus = this.state.increase;
-        let promoted = this.state.promoted;
-        let { name, salary, deleteItem } = this.props;
-        let classnames = "emploee d-flex justify-content-between m-2";
-        let starClassname = "fa-solid fa-star";
+                <div>{salary + '$'}</div>
 
-        if (bonus) {
-            classnames += ' emploee_increase';
-        }
+                <div className='group_items d-flex align-items-center justify-content-between'>
+                    <button onClick={props.toggleProp}>
+                        <i data-prop='bonus' className="fa-solid fa-cookie" ></i>
+                    </button>
+                    <button onClick={() => deleteItem(props.id)}>
+                        <i className="fa-solid fa-trash" ></i>
+                    </button>
+                    <i className={starClassname}></i>
+                </div>
+            </li>
+        </div>
+    )
 
-        if (promoted) {
-            starClassname += ' marked';
-        }
-
-        return (
-            <div>
-                <li className={classnames}>
-                    <div onClick={this.promoteEmployee}>{name}</div>
-
-                    <div>{salary + '$'}</div>
-
-                    <div className='group_items d-flex align-items-center justify-content-between'>
-                        <button>
-                            <i className="fa-solid fa-cookie" onClick={this.increase}></i>
-                        </button>
-                        <button>
-                            <i className="fa-solid fa-trash" onClick={() => deleteItem(this.props.id)}></i>
-                        </button>
-                        <i className={starClassname}></i>
-                    </div>
-                </li>
-            </div>
-        )
-    }
 }
 
 export default Employee;

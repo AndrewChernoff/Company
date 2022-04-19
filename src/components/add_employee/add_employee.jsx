@@ -25,13 +25,16 @@ class AddEmployee extends React.Component {
     }
 
     render() {
+
+        const isDisabled = this.state.name.length < 3 || this.state.salary === '' ? true : false
+
         return (
             <div className="footer">
                 <h2>Добавьте нового сотрудника:</h2>
                 <div className="footer_manage d-flex justify-content-between">
                     <input type="text" onChange={this.changeValue} name="name" value={this.state.name} className="form-control footer_input" placeholder="Как его зовут?" aria-label="Username" aria-describedby="basic-addon1" />
-                    <input type="text" onChange={this.changeValue} name="salary" value={this.state.salary} className="form-control footer_input" placeholder="З/п в $?" aria-label="Username" aria-describedby="basic-addon1" />
-                    <button type="button" className="footer_btn btn btn-light" onClick={this.createNewEmployee}>Добавить</button>
+                    <input type="number" onChange={this.changeValue} name="salary" value={this.state.salary} className="form-control footer_input" placeholder="З/п в $?" aria-label="Username" aria-describedby="basic-addon1" />
+                    <button disabled={isDisabled} type="button" className="footer_btn btn btn-light" onClick={this.createNewEmployee}>Добавить</button>
                 </div>
             </div>
         )
