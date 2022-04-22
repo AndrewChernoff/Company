@@ -15,7 +15,7 @@ class App extends React.Component {
         { name: 'Mark', salary: 7000, bonus: false, promotion: false, id: 3 }
       ],
       searchItem: '',
-      filter: ''
+      filter: 'all'
     }
     this.maxID = 3;
   }
@@ -95,7 +95,8 @@ class App extends React.Component {
     return (
       <div className="App">
         <AppHeader bonus={bonusForSalary} employeesQuantity={employeesQuantity} />
-        <SearchBlock searchItem={this.searchItem} showBigSalaryItems={this.showBigSalaryItems} onGetFilter={this.onGetFilter} />
+        <SearchBlock searchItem={this.searchItem} showBigSalaryItems={this.showBigSalaryItems}
+          onGetFilter={this.onGetFilter} arrayFilter={this.state.filter} />
         <AppFilter employees={filtered} deleteItem={this.deleteItem} toggleProp={this.toggleProp} />
         <AddEmployee addEmployee={this.addEmployee} />
       </div>
