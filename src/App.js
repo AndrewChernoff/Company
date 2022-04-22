@@ -13,7 +13,9 @@ class App extends React.Component {
         { name: 'Andrew', salary: 5500, bonus: true, promotion: false, id: 1 },
         { name: 'John', salary: 6000, bonus: false, promotion: false, id: 2 },
         { name: 'Mark', salary: 7000, bonus: false, promotion: false, id: 3 }
-      ]
+      ],
+      searchItem: '',
+      filter: ''
     }
     this.maxID = 3;
   }
@@ -50,16 +52,51 @@ class App extends React.Component {
     })
   }
 
+  searchItem = (item) => {
+    this.setState({
+      searchItem: item
+    })
+  }
+
+  filterArray = (array, item) => {
+    if (item === '') {
+      return array;
+    }
+
+    return array.filter(el => {
+      return el.name.indexOf(item) > -1;
+    })
+  }
+
+  onGetFilter = (filterValue) => {
+    this.setState({
+      filter: filterValue
+    })
+  }
+
+  getFilteredItems = (filterValue) => {
+    switch (filterValue) {
+      case 'salary':
+        return this.state.employees.filter(el => el.salary > 6000);
+      case 'promotion':
+        return this.state.employees.filter(el => el.promotion === true);
+      case 'all':
+        return this.state.employees
+      default:
+        return this.state.employees
+    }
+  }
 
   render() {
     let bonusForSalary = this.state.employees.filter(el => el.bonus === true).length;
     let employeesQuantity = this.state.employees.length;
+    let filtered = this.filterArray(this.getFilteredItems(this.state.filter), this.state.searchItem)
 
     return (
       <div className="App">
         <AppHeader bonus={bonusForSalary} employeesQuantity={employeesQuantity} />
-        <SearchBlock />
-        <AppFilter employees={this.state.employees} deleteItem={this.deleteItem} toggleProp={this.toggleProp} />
+        <SearchBlock searchItem={this.searchItem} showBigSalaryItems={this.showBigSalaryItems} onGetFilter={this.onGetFilter} />
+        <AppFilter employees={filtered} deleteItem={this.deleteItem} toggleProp={this.toggleProp} />
         <AddEmployee addEmployee={this.addEmployee} />
       </div>
     );
